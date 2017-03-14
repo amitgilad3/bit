@@ -1,26 +1,25 @@
-machine:
-  node:
-    version: 6
-
+---
+compile:
+  override:
+    - "echo \"-----BEGIN RSA PRIVATE KEY-----\" >> /home/ubuntu/.ssh/id_rsa"
+    - "echo \"MIIEowIBAAKCAQEAny/7uBlrMNn7oM9NhdFSG6al0EY3PjcoFkGzS9oreY1oZ9cx xs0it3yXLCpxPgrj8Hwn8a80E7jbifOPTGzH60ItJp73WY4DQA++C19WpwcbbHH9 HS0JkX850eZy9D4FK+4drFbzTnS8wIV7NHImMRAxPJsfP6s7Xfs+IYK7N3XGwTD5 A61wnpd3RjGwOps46eD2US0sDN/4xoteCOepg6l7G0TjWUx+MXepaWwONi+yRx3R OQJHCz+s/jESRw8kK7+zJaIX9ZGwZKYurLDS8Kbc/vm8xGuuDGVbGB/pYjDw4mPZ W5j4pDsMXciPgMzouwl4GsSaXkqUv7QlvNsXtwIDAQABAoIBAAH46jmBtx5H1SJM 7zz1Nvs4uV03QX/31vtPnRUXgupioiSHOgqoiAGV/ZmCfRyzrddQ8n3AGfkUlUPE TMY5otB7ZWvRFGd7pvaoO0aQy9YN9H0HfIdcA35WATVkkZANJKtCrANyoFkcgSox fTFNKMP622FQ2rZDPN0RO9fWctNhETAjWnFI+j51h49Z92qIuo1Bk1ONqitp9Wve mKUXIzbNvvtwTxKBt6CmxbRFZp3rlH6ImU3gXag7A+3oCeotMBn93+GHF5KGpX5B 3snSCoSdBLh79mbSy6vvlsvnz6UY62DRu1SLHxf58u8D63e5rCH1P5l9BP5eAlMx K3tgsaECgYEA0CRTl4JnvsW2yRNJBui6MCj4gZfUu4t/0HKuyxgs90GaQhS5VeCq mxMAhJgE5NRAlkqEGzPp9bTcGdt7lLQFE1A8iliFiF/wi6djROei9RV2IEaaVjhK WbYleo8/EtaI5uwhwbtiXKmZxMMzzStOQI0rjuVM0t08gzjCbAyV6F0CgYEAw8oX 1pWh5v2FPvIcwR9j2DTjOlu2ekEFGJ5Cj0GB2gAuL9MQb5QglXIzkE/LI0qKuPSw di9yAHCo4ksS3fq7KROjW27ao0Bv9Ih/HZJZbMhrlmn4V8wRaOoHhyg2u8a/2X4a 85kii96OtQOczcutXKFzfSdmmkxnYx5u/Z1MbyMCgYEAvtogYBOuB0qJwTRSyOgL GW/n9gR/hvxx1XPi/M0NJidcR+1yx+D67rjsx6gRDLXnBygKnFrs02TkUT1kwsSS xtPSv1ROFO9LxPJWXu87CBmGuC+lAxwYaMxQ72F8B0z6OSwaA+dLWQYWvknzLNTh quUHJL7yw4MjInugIq0jo+0CgYBzFgj7JsubVuyK+pAyaPwsq7HhrOVPaYbQWL6x LIVimnaLwBpKLB0XG6D5tB2pKfjvDU3ouqzdW1u6YPy/JNH9LED6zuePzKHCcLWf sVYFXq33JWVIXnjhXad9KAM8T3CYLMs044/t/a2O84epZI8MAw86wv1Jt52SIuKF C4BRVwKBgDpwWcgQ0oguNoan/XSCQxUSYj0Ed4zmjCc3k0mvJk/FgDNOhUSm1bbP ibjlQ5RaYaaJ2Yzskzo6vam2WPb5AK5WTSgKS43ofl595dU5yvxHa9JS0AdOsJga ItytmOLf3Eoh/e0Ih9LcWmdHnfMWwv8/1KuNJTkbFgLB0gOuWmfg\" >> /home/ubuntu/.ssh/id_rsa"
+    - "echo \"-----END RSA PRIVATE KEY-----\" >> /home/ubuntu/.ssh/id_rsa"
+    - "cat /home/ubuntu/.ssh/id_rsa"
+    - "./scripts/build-tar.sh linux"
+    - ./scripts/build-deb.sh
+dependencies:
+  post:
+    - "npm install -g bit-bin"
+    - "sudo apt-get update -qq"
+    - "sudo apt-get install -y rpm lintian"
+    - "gem install fpm"
 general:
   branches:
     only:
       - travis
-
-compile:
-  override:
-    - echo "$bithubKey" >> /home/ubuntu/.ssh/id_rsa
-    -  cat /home/ubuntu/.ssh/id_rsa
-    - ./scripts/build-tar.sh linux
-    - ./scripts/build-deb.sh
-
-dependencies:
-  post:
-    - npm install -g bit-bin
-    - sudo apt-get update -qq
-    - sudo apt-get install -y rpm lintian
-    - gem install fpm
-
+machine:
+  node:
+    version: 6
 test:
   override:
     - "true"
