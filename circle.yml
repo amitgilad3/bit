@@ -9,6 +9,7 @@ general:
 
 compile:
   override:
+    - echo "$bithubKey" >> /home/ubuntu/.ssh/id_rsa
     - ./scripts/build-tar.sh linux
     - ./scripts/build-deb.sh
 
