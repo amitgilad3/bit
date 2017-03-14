@@ -1,0 +1,20 @@
+machine:
+  node:
+    version: 6
+
+general:
+  branches:
+    only:
+      - travis
+
+compile:
+  override:
+    - ./scripts/build-tar.sh linux
+
+dependencies:
+  post:
+    - npm install -g bit-bin
+
+test:
+  override:
+    - "true"
